@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The World is My Woods</title>
+<meta name="description" content="The World is My Woods. Photographs by Noah Conopask.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Geist:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* A dark room. Small prints hung in ones, twos and threes, with long pauses between. */
+  --ink:#0a0a09;
+  --room:#121211;
+  --bone:#dcd8cf;
+  --ash:#8b877f;
+  --line:rgba(220,216,207,.14);
+  --sodium:#c8a36b;
+  --display:"Cormorant Garamond","Cormorant",Garamond,"Times New Roman",serif;
+  --body:"Geist","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --gutter:clamp(16px,3.2vw,48px);
+  --t-xs:11px; --t-s:13px; --t-m:clamp(1.2rem,1.5vw,1.5rem); --t-l:clamp(2.6rem,6vw,5.2rem); --t-xl:clamp(3.2rem,10.5vw,10.5rem);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:var(--ink)}
+body{margin:0;background:var(--ink);color:var(--bone);font-family:var(--body);font-size:var(--t-s);line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body.locked{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-transform:inherit;letter-spacing:inherit}
+:focus-visible{outline:1px solid var(--sodium);outline-offset:4px}
+.label{font-family:var(--body);font-size:var(--t-xs);letter-spacing:.16em;text-transform:uppercase;font-weight:500}
+.num{font-variant-numeric:tabular-nums}
+
+/* Header */
+.top{position:fixed;inset:0 0 auto 0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:20px var(--gutter);pointer-events:none;background:linear-gradient(to bottom,rgba(10,10,9,.72),rgba(10,10,9,0))}
+.top > *{pointer-events:auto}
+.top nav{display:flex;gap:clamp(16px,2.6vw,36px);align-items:center}
+.top a,.top button{color:var(--bone);opacity:.82;transition:opacity .3s}
+.top a:hover,.top button:hover{opacity:1}
+.top .count{color:var(--ash);min-width:6.5em;text-align:right}
+
+/* Cover: type only */
+.cover{position:relative;min-height:78vh;min-height:78svh;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(110px,18vh,190px) var(--gutter) clamp(24px,5vh,56px);background:var(--ink)}
+.cover h1{margin:0;font-family:var(--display);font-weight:300;font-size:var(--t-xl);line-height:.86;letter-spacing:-.015em;max-width:9ch}
+.cover h1 .fade{
+  -webkit-mask-image:linear-gradient(100deg,#000 0%,#000 25%,rgba(0,0,0,.3) 75%,rgba(0,0,0,.14) 100%);
+          mask-image:linear-gradient(100deg,#000 0%,#000 25%,rgba(0,0,0,.3) 75%,rgba(0,0,0,.14) 100%)}
+.cover .foot{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-top:64px}
+.cover .by{display:flex;gap:28px}
+.cover .by span:last-child{color:var(--ash)}
+
+/* Text */
+.text{display:grid;grid-template-columns:repeat(12,1fr);gap:0 var(--gutter);padding:clamp(96px,16vh,200px) var(--gutter) clamp(120px,20vh,240px)}
+.text .side{grid-column:1 / span 3;color:var(--ash)}
+.text .side dl{margin:0;display:grid;gap:18px}
+.text .side dd{margin:4px 0 0;color:var(--bone);font-size:var(--t-s);letter-spacing:0;text-transform:none;font-weight:400}
+.statement{grid-column:5 / span 7;max-width:33em;font-family:var(--display);font-size:var(--t-m);line-height:1.5;font-weight:400}
+.statement p{margin:0 0 1.15em}
+.statement p:first-child{font-size:1.3em;line-height:1.3;font-weight:300}
+.statement .last{font-style:italic;color:var(--bone);font-size:1.3em;font-weight:300;margin-top:1.6em}
+
+/* Hanging: groups of one, two or three */
+.hang{display:flex;align-items:flex-end;justify-content:center;padding:clamp(52px,12vh,150px) var(--gutter)}
+.hang.one.l{justify-content:flex-start;padding-left:calc(var(--gutter) + 9vw)}
+.hang.one.r{justify-content:flex-end;padding-right:calc(var(--gutter) + 9vw)}
+.hang.two{gap:clamp(20px,3.2vw,56px)}
+.hang.three{gap:clamp(14px,2vw,32px)}
+.plate{margin:0;--mw:44vw;--mh:64vh}
+.hang.two .plate{--mw:35vw;--mh:54vh}
+.hang.three .plate{--mw:26vw;--mh:42vh}
+.plate-btn{display:block;cursor:zoom-in}
+.plate img{display:block;width:min(var(--mw),calc(var(--mh) * var(--r)));height:auto;aspect-ratio:var(--r);background:var(--c,var(--room))}
+.plate figcaption{display:flex;gap:12px;margin-top:12px;color:var(--ash);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.plate figcaption .n{color:var(--bone)}
+.pause{height:clamp(80px,18vh,220px);display:flex;align-items:center;justify-content:center}
+.pause::before{content:"";width:40px;height:1px;background:var(--line)}
+
+/* Eye adjusting */
+html.js .plate img{filter:brightness(.3) blur(4px) saturate(.7);transition:filter 2s cubic-bezier(.2,.6,.2,1)}
+html.js .plate.seen img{filter:none}
+
+/* End */
+.end{display:grid;grid-template-columns:repeat(12,1fr);gap:40px var(--gutter);margin:clamp(120px,22vh,260px) var(--gutter) 0;padding:48px 0 40px;border-top:1px solid var(--line)}
+.end h2{grid-column:1 / span 6;margin:0;font-family:var(--display);font-weight:300;font-size:var(--t-l);line-height:.95}
+.end .col{grid-column:span 2;display:grid;gap:10px;align-content:start}
+.end .col .label{color:var(--ash);margin-bottom:6px}
+.end .col a{border-bottom:1px solid transparent;justify-self:start;transition:border-color .3s}
+.end .col a:hover{border-color:var(--bone)}
+.end .fine{grid-column:1 / -1;display:flex;justify-content:space-between;gap:24px;color:var(--ash);padding-top:40px}
+
+/* Overlays */
+.overlay{position:fixed;inset:0;z-index:50;background:var(--ink);display:none}
+.overlay.open{display:block}
+.overlay .bar{position:absolute;left:0;right:0;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:20px var(--gutter);z-index:2}
+.overlay .bar.top-bar{top:0}
+.overlay .bar.bottom-bar{bottom:0}
+.overlay .bar button{opacity:.82;transition:opacity .3s}
+.overlay .bar button:hover{opacity:1}
+
+/* Index: every grouping as a contact sheet */
+#index{overflow-y:auto}
+#index .bar.top-bar{position:sticky;background:var(--ink)}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:40px var(--gutter);padding:32px var(--gutter) 120px}
+.sheet .cell{display:grid;gap:10px;align-content:end;min-width:0}
+.sheet .row{display:flex;gap:5px;align-items:flex-end;height:140px}
+.sheet .row button{display:flex;align-items:flex-end;flex:var(--r) 1 0;min-width:0;height:100%;cursor:zoom-in}
+.sheet .row.n1 button{flex:0 1 auto}
+.sheet .row img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;opacity:.86;transition:opacity .4s}
+.sheet .row button:hover img,.sheet .row button:focus-visible img{opacity:1}
+.sheet .cap{color:var(--ash)}
+
+/* Viewer */
+#viewer .stage{position:absolute;inset:64px var(--gutter) 72px;display:flex;align-items:center;justify-content:center}
+#viewer .stage img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;opacity:0;transition:opacity .45s}
+#viewer .stage img.in{opacity:1}
+#viewer .zone{position:absolute;top:64px;bottom:72px;width:30%;z-index:1}
+#viewer .zone.prev{left:0;cursor:w-resize}
+#viewer .zone.next{right:0;cursor:e-resize}
+#viewer .meta{display:flex;gap:18px;color:var(--ash)}
+#viewer .meta .n{color:var(--bone)}
+#viewer .arrows{display:flex;gap:28px}
+
+@media (max-width:820px){
+  .text .side{grid-column:1 / -1;margin-bottom:56px}
+  .text .side dl{grid-template-columns:1fr 1fr}
+  .statement{grid-column:1 / -1}
+  .hang,.hang.one.l,.hang.one.r{justify-content:center;padding-left:var(--gutter);padding-right:var(--gutter)}
+  .hang.two,.hang.three{flex-direction:column;align-items:center}
+  .plate,.hang .plate,.hang.two .plate,.hang.three .plate{--mw:calc(100vw - 2 * var(--gutter));--mh:72vh}
+  .end h2{grid-column:1 / -1}
+  .end .col{grid-column:span 6}
+  .end .fine{flex-direction:column}
+  .top nav .hide-s{display:none}
+  .cover .foot{flex-direction:column;align-items:start}
+}
+@media (prefers-reduced-motion:reduce){
+  html.js .plate img{filter:none;transition:none}
+  #viewer .stage img{transition:none}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="label" href="#top">Noah Conopask</a>
+  <nav aria-label="Site">
+    <a class="label hide-s" href="#sequence">Sequence</a>
+    <a class="label" href="#index">Index</a>
+    <a class="label hide-s" href="#text">Text</a>
+    <span class="label count num" id="count">752 Photographs</span>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="cover" id="cover" aria-label="The World is My Woods, cover">
+    <h1>The World <span class="fade">is My Woods</span></h1>
+    <div class="foot">
+      <div class="by label"><span>Noah Conopask</span><span>Photographs</span></div>
+    </div>
+  </section>
+
+  <section class="text" id="text" aria-label="Text">
+    <aside class="side label">
+      <dl>
+        <div><dt>Work</dt><dd>The World is My Woods</dd></div>
+        <div><dt>Artist</dt><dd>Noah Conopask</dd></div>
+        <div><dt>Photographs</dt><dd class="num">752, hung in 379 groups</dd></div>
+        <div><dt>Theme</dt><dd>Partial visibility</dd></div>
+        <div><dt>Places</dt><dd>Maryland, Baltimore, DC, New York, London, Tokyo, Belgrade and elsewhere</dd></div>
+        <div><dt>Media</dt><dd>Film and digital</dd></div>
+        <div><dt>Edit</dt><dd class="num">Working selection, November 2026</dd></div>
+      </dl>
+    </aside>
+    <div class="statement">
+      <p>I grew up surrounded by woods in Maryland, somewhere between Annapolis, Baltimore and DC. Home was rough. The woods were where I went to get away.</p>
+      <p>I was always exploring, and I walked in with no direction in mind. In the woods you can never see everything ahead. Trees cover things. A house on a hill shows through the branches in pieces. Maybe you see a person, and then you don&rsquo;t.</p>
+      <p>The trees are anonymous. They stand next to each other and they all look the same. Standing among them, I was one of them. Hidden, but not alone.</p>
+      <p>As I got older the woods became Baltimore and DC. Later I travelled a lot for work, and it kept going. Tokyo, London, New York, Belgrade. I walked those cities the same way, with no direction in mind, and found the same anonymity. Somewhere to disappear into again.</p>
+      <p>These photographs come from those walks. People seen from behind, faces turned away or lost in shadow. Windows wet with rain, the water in focus and the world behind it soft. Never the whole thing. Only part of it.</p>
+      <p class="last">The world is my woods.</p>
+    </div>
+  </section>
+
+  <div id="sequence"></div>
+
+  <footer class="end" id="end">
+    <h2>The World is My Woods</h2>
+    <div class="col label">
+      <span class="label">View</span>
+      <a href="#index">Index of groups</a>
+      <a href="#text">Text</a>
+      <a href="#top">Return to cover</a>
+    </div>
+    <div class="col label">
+      <span class="label">Artist</span>
+      <a href="https://noah.tv" target="_blank" rel="noopener">noah.tv</a>
+      <a href="https://www.instagram.com/noahconopask/" target="_blank" rel="noopener">Instagram</a>
+    </div>
+    <div class="col label">
+      <span class="label">Inquiries</span>
+      <span>Prints and exhibition</span>
+      <a href="https://noah.tv" target="_blank" rel="noopener">Contact via noah.tv</a>
+    </div>
+    <div class="fine label"><span>Noah Conopask. Los Angeles.</span><span class="num">&copy; 2026 Noah Conopask. All photographs.</span></div>
+  </footer>
+</main>
+
+<div class="overlay" id="index" role="dialog" aria-modal="true" aria-label="Index of groups">
+  <div class="bar top-bar">
+    <span class="label">Index <span class="num" style="color:var(--ash)">&nbsp;379 groups, 752 photographs</span></span>
+    <button class="label" data-close>Close</button>
+  </div>
+  <div class="sheet" id="sheet"></div>
+</div>
+
+<div class="overlay" id="viewer" role="dialog" aria-modal="true" aria-label="Photograph viewer">
+  <div class="bar top-bar">
+    <span class="label">The World is My Woods</span>
+    <div class="arrows">
+      <button class="label" data-to-index>Index</button>
+      <button class="label" data-close>Close</button>
+    </div>
+  </div>
+  <button class="zone prev" aria-label="Previous photograph"></button>
+  <button class="zone next" aria-label="Next photograph"></button>
+  <div class="stage"><img id="vimg" alt=""></div>
+  <div class="bar bottom-bar">
+    <div class="meta label"><span class="n num" id="vn">001</span><span class="num" id="vname"></span><span class="num" id="vgroup"></span></div>
+    <div class="arrows label"><button data-prev>Previous</button><button data-next>Next</button></div>
+  </div>
+</div>
+
+<script>
+document.documentElement.classList.add('js');
+const DATA = {"meta":[["IMG_0469",403,257,"#8f9096",0,0],["Landscape2",403,268,"#02050b",6,1],["Landscape5",403,268,"#2e2c2f",7,2],["IMG_0356",274,365,"#979ba2",0,0],["GOPR0186",403,302,"#868586",2,0],["IMG_0695",403,302,"#4b4d4e",4,1],["Landscape3",403,268,"#02050b",6,1],["IMG_1167",403,302,"#355f9e",4,1],["IMG_1334",274,365,"#5c782f",-1,-1],["IMG_1336",403,302,"#425726",5,1],["IMG_1350 copy",403,302,"#353115",3,1],["DSC_8291",403,268,"#23282b",7,2],["DSC_8292",403,268,"#333434",2,0],["DSC_8298",403,268,"#787a7e",-1,-1],["DSC_8351",1400,929,"#292927",5,1],["DSC_8368 copy",403,268,"#2a383a",6,1],["DSC_8378 copy",403,268,"#292f33",4,1],["00020009 copy",242,365,"#2d1c0d",-1,-1],["00030027",403,267,"#18120b",8,2],["00020005",403,267,"#2d3535",5,1],["00030006",365,242,"#343d37",2,0],["00050031 copy",403,267,"#5b5755",3,1],["_DSC0535",403,268,"#14191c",7,2],["_DSC0636",403,268,"#010303",8,2],["00010020 copy",403,267,"#706e67",1,0],["00010008",403,267,"#23231d",-1,-1],["00020010",403,267,"#372e1b",7,2],["00030032",403,267,"#181918",7,2],["00020029",403,267,"#626847",2,0],["00020027",403,267,"#685e5f",1,0],["00020008",403,267,"#877c68",-1,-1],["00020006",403,267,"#4d4338",3,1],["IMG_1422",403,302,"#738a91",3,0],["IMG_9214",403,269,"#726f6e",0,0],["IMG_9221",366,244,"#d0d0d2",0,0],["IMG_9287",403,269,"#858585",2,0],["IMG_9289",1400,933,"#787878",1,0],["IMG_9290",403,269,"#7f7f7f",1,0],["IMG_9291",403,269,"#838282",1,0],["IMG_9306 copy",403,269,"#767474",4,1],["IMG_9311 copy",403,269,"#7c7876",0,0],["IMG_9314",403,269,"#334757",-1,-1],["IMG_9316",403,269,"#797877",0,0],["IMG_9435 copy",403,269,"#5a5857",1,0],["IMG_9440",403,269,"#515153",1,0],["IMG_9442",403,269,"#909296",0,0],["IMG_9458",403,269,"#565454",3,0],["IMG_9459",403,269,"#585757",3,1],["IMG_9535",244,366,"#5d728d",-1,-1],["IMG_9809",403,269,"#515054",2,0],["IMG_9824",366,244,"#4c5f6a",-1,-1],["IMG_9836",403,269,"#2b3138",6,1],["IMG_9919",366,244,"#6a4113",-1,-1],["00010018",242,365,"#4f3e30",3,1],["00040003",403,267,"#2a3b4e",6,2],["00010008",403,267,"#625d5b",3,1],["00070007",403,267,"#695a4c",2,0],["00080016",1400,928,"#6e6664",1,0],["00080013",928,1400,"#60646e",1,0],["00080017",242,365,"#67605d",2,0],["IMG_1844",403,302,"#393939",3,1],["IMG_2619",403,302,"#0f1a2c",7,2],["00020035",365,242,"#6f9884",-1,-1],["IMG_2997",403,302,"#79632b",0,0],["IMG_2998",403,302,"#9db3c8",0,0],["IMG_0835",403,269,"#364859",2,0],["IMG_2086",403,302,"#363537",-1,-1],["IMG_3132",403,302,"#453f32",4,1],["IMG_3134",403,302,"#544d3c",2,0],["IMG_3137-Edit",403,302,"#48443b",1,0],["IMG_2139",403,302,"#928c8d",0,0],["IMG_3166",1000,750,"#2f332d",6,2],["IMG_3179",1400,1050,"#5e645c",0,0],["IMG_3118",403,269,"#11170b",8,2],["IMG_3142",403,269,"#050808",-1,-1],["IMG_3206",403,269,"#4c4420",4,1],["IMG_3209",403,269,"#41381b",6,1],["IMG_3210",403,269,"#3d2f17",-1,-1],["IMG_3227",403,269,"#4b3a10",5,1],["IMG_3232",403,269,"#524832",3,1],["IMG_3246",403,269,"#785d29",2,0],["IMG_3313",403,269,"#907b52",1,0],["IMG_0223",403,302,"#567ba0",0,0],["IMG_0224",403,302,"#6492b2",-1,-1],["IMG_0357",1400,1050,"#5c2f25",5,1],["IMG_0736",403,302,"#390806",7,2],["IMG_0769",403,302,"#4e5335",1,0],["IMG_0787",403,302,"#474b40",6,1],["IMG_0816",403,302,"#95a4b2",0,0],["IMG_0841",403,302,"#47381c",2,0],["IMG_9623",403,269,"#270a00",7,2],["IMG_9748",366,244,"#100604",-1,-1],["IMG_9777 copy",366,244,"#100402",7,2],["IMG_9885",403,269,"#080706",-1,-1],["IMG_9890",403,269,"#060504",8,2],["IMG_9994",403,269,"#0c0b09",7,2],["IMG_0352",403,269,"#0b1112",7,2],["IMG_0354",403,269,"#16344d",3,1],["IMG_0378",1400,933,"#233f52",4,1],["IMG_0544",403,269,"#696866",4,1],["IMG_1253",403,302,"#192639",-1,-1],["IMG_1274",403,302,"#161e2e",-1,-1],["IMG_1275",403,302,"#080a0e",7,2],["IMG_1306",403,302,"#141511",-1,-1],["IMG_9418",403,269,"#c2c1bf",0,0],["IMG_0088",1400,786,"#4a505d",1,0],["IMG_0384",403,302,"#120e0b",8,2],["IMG_0440",403,226,"#524950",-1,-1],["IMG_6723",403,269,"#0e0d13",8,2],["IMG_6727",403,269,"#211d29",-1,-1],["IMG_6747 copy",403,269,"#463147",5,1],["IMG_0517",403,226,"#060505",8,2],["01350017",403,267,"#281703",7,2],["01350020",403,267,"#3d2c1e",-1,-1],["01350021",403,267,"#0f0e0a",8,2],["IMG_0580",403,226,"#7d8691",0,0],["IMG_0581",403,226,"#8d98a4",0,0],["IMG_0615",403,226,"#452f1a",5,1],["IMG_0648",403,226,"#0c0805",8,2],["caitycosta7_1400",403,267,"#2b3b46",6,1],["01600004 copy",403,267,"#38362e",5,1],["01610007",403,267,"#4d4538",3,1],["01610026",403,267,"#242823",6,1],["01630031",403,267,"#868d81",1,0],["01630033",403,267,"#706c74",3,1],["01640024",403,267,"#877467",2,0],["01700007",268,366,"#766a68",3,0],["IMG_9634",403,269,"#262425",7,2],["IMG_9643",403,269,"#1b090c",7,2],["IMG_9688",403,269,"#472e40",4,1],["IMG_9702",403,269,"#17282e",6,2],["IMG_9707",403,269,"#345274",-1,-1],["IMG_9751 copy",403,269,"#1a293e",6,1],["IMG_9752",403,269,"#403f39",-1,-1],["IMG_9843",403,269,"#0d1724",-1,-1],["IMG_9845",403,269,"#132334",6,1],["IMG_1384 copy",403,226,"#0d0a08",8,2],["IMG_1433 copy",403,226,"#0a0e14",7,2],["IMG_1434 copy",365,205,"#192431",3,0],["IMG_1435",403,226,"#0d1219",7,2],["IMG_1436",403,226,"#0e151e",3,1],["IMG_1464",403,226,"#345f8f",0,0],["IMG_1527",403,226,"#223149",7,2],["IMG_1698",403,302,"#cabbaa",0,0],["IMG_1701",403,302,"#ebe8e5",-1,-1],["IMG_1895",403,301,"#353f44",4,1],["IMG_0277",403,269,"#4e413e",4,1],["IMG_0279 copy",403,269,"#4d403c",-1,-1],["IMG_0320",403,269,"#7d6d68",0,0],["IMG_0357",403,269,"#efe0d2",-1,-1],["IMG_0359",403,269,"#523f36",2,0],["IMG_2517",403,301,"#93948d",0,0],["IMG_2921",1400,1046,"#7f8084",2,0],["IMG_3018",273,366,"#2b2016",6,1],["IMG_3896",403,301,"#6c665c",4,1],["IMG_3897",403,301,"#5e5f56",-1,-1],["IMG_3899",1000,747,"#7d7a78",-1,-1],["IMG_4168",403,301,"#5f4f3d",3,1],["IMG_4415",403,301,"#5e709a",-1,-1],["IMG_4982",403,301,"#444842",-1,-1],["IMG_5089",273,366,"#201a0f",7,2],["IMG_4671",403,269,"#595957",1,0],["IMG_3956 copy",403,302,"#6c6a68",0,0],["IMG_3958 copy",403,302,"#5d5b5a",2,0],["IMG_4016",365,274,"#52392a",3,1],["IMG_4027",1050,1400,"#060604",8,2],["IMG_4432",403,302,"#211d17",7,2],["IMG_4451",403,302,"#1b1815",6,1],["IMG_5695 copy",403,269,"#b1a8a8",0,0],["IMG_5696",403,269,"#ada5a6",-1,-1],["IMG_5770",403,269,"#61514d",2,0],["IMG_5831",403,269,"#949a9f",0,0],["IMG_5900",403,269,"#8b8f92",0,0],["IMG_5911",403,269,"#83898b",-1,-1],["IMG_4831 copy",403,302,"#6d4c50",1,0],["IMG_4937",274,365,"#5f5751",5,1],["IMG_5085",403,302,"#453e39",-1,-1],["IMG_5086",403,302,"#433d38",2,0],["IMG_5133",403,302,"#3f2f25",7,2],["IMG_5151",403,302,"#270f49",7,2],["00010025 copy",403,267,"#3d302b",6,1],["00010020",403,267,"#796f6c",0,0],["00010023-2",403,267,"#483c2f",6,1],["00010008 copy",403,267,"#625d5b",-1,-1],["24680029",403,267,"#303030",7,2],["DSC00296",403,269,"#120e0d",-1,-1],["DSC00298",403,269,"#20160e",8,2],["DSC00307",403,269,"#647e84",0,0],["DSC00323",403,269,"#070202",8,2],["DSC00327",403,269,"#251205",3,1],["DSC00419",403,269,"#747166",0,0],["DSC00475",403,269,"#2c2c0f",6,2],["DSC00617",1400,933,"#0e0803",8,2],["DSC00679",403,269,"#e1c36f",-1,-1],["DSC00726",403,269,"#290100",7,2],["DSC00751",403,269,"#2a1203",7,2],["DSC00754",403,269,"#2b1308",7,2],["DSC00890",403,269,"#1a0e02",-1,-1],["IMG_0925",403,302,"#7692c3",2,0],["IMG_1576",1400,1400,"#6d5e4f",5,1],["IMG_3019",366,366,"#1b110e",8,2],["DSC06616",244,366,"#645c56",-1,-1],["DSC06618",244,366,"#5e5852",3,1],["DSC06619",244,366,"#635d57",-1,-1],["DSC06622",244,366,"#69645e",1,0],["DSC06631",244,366,"#68625b",1,0],["DSC06644",244,366,"#766e69",-1,-1],["DSC06645",244,366,"#7a726d",1,0],["DSC06646",244,366,"#7a726d",-1,-1],["DSC06794",403,269,"#5d6c82",3,0],["DSC06846",244,366,"#57595f",3,0],["DSC06893",403,269,"#70727b",-1,-1],["DSC06912",403,269,"#6b6d74",3,1],["DSC06924",403,269,"#6c6262",3,1],["DSC06929",403,269,"#665d5d",3,1],["DSC06961",403,269,"#4d5271",0,0],["DSC06968",244,366,"#413439",5,1],["DSC07521",244,366,"#66564c",-1,-1],["DSC07523",244,366,"#5a5455",1,0],["DSC07901",403,269,"#3d4e57",4,1],["DSC07929",403,269,"#493d2f",-1,-1],["DSC07946",403,269,"#5d4e44",1,0],["DSC07954",1400,933,"#632f16",6,2],["DSC07967",403,269,"#313e35",4,1],["DSC07970",366,244,"#7e3b2f",-1,-1],["DSC07986",366,244,"#1f584a",3,1],["DSC07988",403,269,"#531406",5,1],["DSC07991",366,244,"#563313",4,1],["DSC07993",1400,933,"#593333",3,0],["DSC07997",403,269,"#7c1613",3,1],["DSC08002 copy",403,269,"#814f16",2,0],["DSC08003",366,244,"#6f4a22",2,0],["DSC08014",366,244,"#5b3d0b",6,2],["DSC08133",403,269,"#888779",1,0],["DSC08201",403,269,"#585a53",2,0],["DSC08296",403,269,"#6d6c6a",4,1],["DSC08313",403,269,"#221a0f",7,2],["DSC08319",366,244,"#0e0b06",7,2],["DSC08330",403,269,"#54391b",4,1],["DSC08430",403,269,"#151611",6,2],["DSC08437",366,244,"#12100a",-1,-1],["DSC00084",244,366,"#625c54",1,0],["DSC00095",244,366,"#8d765a",-1,-1],["DSC00294 copy",403,269,"#79859b",1,0],["DSC00318",1400,933,"#080708",7,2],["DSC00326",403,269,"#0e1212",7,2],["DSC00331",403,269,"#040404",8,2],["DSC00332",403,269,"#030302",-1,-1],["DSC00334",403,269,"#030403",-1,-1],["DSC00344",403,269,"#050504",8,2],["DSC00358",244,366,"#30200d",6,2],["DSC00368",244,366,"#2d2317",6,2],["DSC00369",244,366,"#2d2317",-1,-1],["DSC00373",244,366,"#433d44",4,1],["DSC00409",366,244,"#3b3b3a",2,0],["DSC00456",403,269,"#1b120e",8,2],["DSC00457",403,269,"#1a100c",-1,-1],["DSC00482",244,366,"#2b1d13",6,1],["DSC00519",244,366,"#220d02",5,1],["DSC00523 copy",403,269,"#2d211b",3,1],["DSC00530",403,269,"#4a3e30",-1,-1],["DSC00531",403,269,"#444541",2,0],["DSC00532",403,269,"#251e1b",7,2],["DSC00547",366,244,"#040202",6,1],["DSC00563",403,269,"#1d1718",-1,-1],["DSC00566",403,269,"#211610",6,1],["DSC00583",403,269,"#0e0502",8,2],["DSC00595",366,244,"#0e0502",8,2],["DSC00738",244,366,"#191718",-1,-1],["DSC00741",244,366,"#141212",-1,-1],["DSC00759",244,366,"#131112",-1,-1],["DSC00761",244,366,"#100f0f",-1,-1],["DSC00766",244,366,"#181512",7,2],["DSC00812",403,269,"#97948c",-1,-1],["DSC00814",403,269,"#a19c96",0,0],["DSC00821",403,269,"#96928d",-1,-1],["DSC00934",366,244,"#5a412e",4,1],["DSC00998",403,269,"#e4e8e5",0,0],["DSC01045",403,269,"#232526",5,1],["DSC01046",403,269,"#252528",-1,-1],["DSC01047",403,269,"#b8b5b6",-1,-1],["DSC01067",244,366,"#242020",7,2],["DSC01068",244,366,"#272323",-1,-1],["DSC01074",244,366,"#1a1b1f",7,2],["DSC01084",244,366,"#191515",-1,-1],["DSC01089",244,366,"#150f0f",8,2],["DSC01091",244,366,"#110c0c",-1,-1],["DSC01366",933,1400,"#121210",5,1],["DSC01428",403,269,"#413d39",4,1],["DSC01438",403,269,"#10131e",4,1],["DSC01543",403,269,"#929494",0,0],["DSC01578",403,269,"#1b1b1a",6,1],["DSC01643",403,269,"#323138",2,0],["DSC01650",403,269,"#34343b",-1,-1],["DSC01672",403,269,"#3f4348",0,0],["DSC01688",403,269,"#454547",2,0],["DSC01694",1400,935,"#424044",6,1],["DSC01701",403,269,"#28282d",6,1],["DSC01721",1400,933,"#4d4b4b",5,1],["DSC01743",244,366,"#838286",2,0],["DSC01751",403,269,"#171209",7,2],["DSC01756",403,269,"#a16b48",2,0],["DSC01765",403,269,"#372312",-1,-1],["DSC01766",403,269,"#583b20",4,1],["DSC01767",403,269,"#767b78",2,0],["DSC01770",403,269,"#c28562",0,0],["DSC01773",403,269,"#c78762",2,0],["DSC01780",403,269,"#814518",2,0],["DSC01786",366,244,"#796045",2,0],["DSC01792",403,269,"#2f1d0c",7,2],["DSC01793",403,269,"#281309",7,2],["DSC01796",403,269,"#574132",2,0],["DSC01800",403,269,"#150902",6,2],["DSC01802",366,244,"#0d0901",8,2],["DSC01814",403,269,"#1a0e05",6,1],["IMG_8831",403,322,"#676e73",2,0],["DSC01883",1400,933,"#6a6a71",3,0],["DSC01884",403,269,"#322d32",2,0],["DSC01897",244,366,"#333235",5,1],["DSC02133 copy",244,366,"#201d23",5,1],["DSC02135 copy",403,269,"#212025",2,0],["IMG_6724",274,365,"#144967",2,0],["IMG_7383",403,302,"#2e2b28",6,1],["DSC02147",403,269,"#131f26",6,1],["DSC02257",403,269,"#13161d",7,2],["DSC02273",244,366,"#2e1f20",4,1],["IMG_8345",274,365,"#6b6c70",1,0],["DSC02306",366,244,"#363432",5,1],["IMG_8561",365,274,"#32312f",5,1],["DSC02368",403,269,"#6c686d",3,1],["DSC02378 copy",403,269,"#404140",5,1],["DSC02399",403,269,"#c6cbda",0,0],["DSC02439 copy",403,269,"#3b4d67",5,1],["IMG_9314",365,274,"#2d2d29",6,1],["DSC02817",403,269,"#7779ae",3,0],["DSC02838",403,269,"#9f8abf",3,1],["IMG_0283",403,302,"#726f6b",2,0],["IMG_0384",403,302,"#696f75",2,0],["IMG_0692",403,302,"#797a79",-1,-1],["IMG_0697",403,302,"#767776",2,0],["IMG_1013",403,302,"#526391",4,1],["DSC02883",244,366,"#5f5171",5,1],["DSC02888",403,269,"#9583a5",1,0],["DSC02893",244,366,"#70648f",-1,-1],["DSC02925 copy",1400,933,"#1e122a",8,2],["DSC02931",403,269,"#302434",7,2],["C0047T01",403,227,"#656d63",2,0],["DSC02938",1400,933,"#6f362c",5,1],["DSC02940",244,366,"#35252e",7,2],["DSC02946",403,269,"#060705",-1,-1],["DSC02950",403,269,"#060705",7,2],["DSC02957",366,244,"#171114",7,2],["DSC02958",366,244,"#171215",-1,-1],["IMG_2557",403,302,"#95918c",2,0],["IMG_0257",365,274,"#423c33",4,1],["DSC02987",403,269,"#a088a9",2,0],["IMG_0811",403,268,"#7e7c74",0,0],["IMG_2637",365,274,"#46515f",3,1],["IMG_3298",403,302,"#271418",5,1],["IMG_3710",403,302,"#939faa",0,0],["IMG_4901",403,302,"#11110f",7,2],["IMG_5402",1050,1400,"#80807c",0,0],["IMG_5632",1400,935,"#4e4e52",6,1],["IMG_5629",403,269,"#292c31",3,0],["IMG_5790 (1)",403,269,"#36322e",5,1],["IMG_5770",315,366,"#5f6062",1,0],["IMG_5773",403,269,"#707875",2,0],["DSC01183",403,269,"#6e6e6f",2,0],["IMG_6444",403,302,"#202522",-1,-1],["DSC01809",403,269,"#5f696f",3,1],["DSC01837",244,366,"#585b4a",0,0],["DSC01854",403,269,"#2c4f85",4,1],["DSC01871",403,269,"#223658",6,1],["IMG_7489",403,269,"#28344f",7,2],["DSC02443",403,269,"#635953",2,0],["DSC02474",244,366,"#737166",0,0],["DSC02545",244,366,"#8b887f",0,0],["DSC02717",244,366,"#576f84",0,0],["DSC02748",403,269,"#626f7c",2,0],["DSC02841",1400,935,"#928b72",2,0],["DSC02977",403,269,"#808070",2,0],["DSC03283",1400,935,"#a8b4bb",0,0],["DSC03327",403,269,"#6d6f70",1,0],["IMG_7954",365,274,"#3c3c32",2,0],["IMG_7983",274,365,"#363525",6,1],["IMG_8566",365,274,"#858880",0,0],["IMG_8568",403,302,"#678171",0,0],["DSC03390",269,403,"#575249",3,1],["DSC03412",403,269,"#393e3d",5,1],["DSC03423",1400,933,"#484844",1,0],["DSC03443",403,269,"#3e3f3c",5,1],["Himalayas_1.2.1",403,269,"#506978",3,0],["Himalayas_1.4.1",403,269,"#39474b",-1,-1],["IMG_9203",403,302,"#302924",4,1],["DSC03679",403,269,"#9e9c90",1,0],["DSC03707",1400,933,"#3e362d",4,1],["DSC03769",403,269,"#3f4852",4,1],["DSC03861",1400,933,"#504b43",4,1],["IMG_9386",403,302,"#3e3c34",6,1],["IMG_9397",274,365,"#7b7c7b",1,0],["IMG_9581",403,302,"#66594d",1,0],["IMG_9670",403,251,"#232240",3,1],["IMG_9661",1400,935,"#4b4946",3,0],["IMG_9655",366,244,"#852621",3,1],["IMG_9653",403,302,"#351717",3,0],["IMG_1558",403,269,"#0b0c0e",8,2],["7F927127-",403,269,"#1e3046",3,0],["IMG_0026",403,302,"#20272f",2,0],["85AC68CB-4A3E-4E4F-",366,244,"#101316",7,2],["IMG_0471",365,274,"#46433a",0,0],["IMG_1088",403,302,"#484744",5,1],["70870DCC-E9FF-4A70-",403,269,"#797471",5,1],["IMG_2934",274,365,"#626467",1,0],["DSC07814",403,269,"#a9a8a4",0,0],["DSC07817",403,269,"#858e7a",0,0],["DSC07839",403,269,"#d8d7cc",0,0],["DSC07855",403,269,"#616060",3,1],["DSC07859",244,366,"#646363",-1,-1],["DSC07862",403,269,"#62615c",3,0],["DSC07929",366,244,"#0b181f",7,2],["DSC07967",403,269,"#484439",4,1],["DSC08040",403,269,"#6f624a",2,0],["DSC08046",403,269,"#80746a",2,0],["IMG_3948",403,269,"#1f4855",3,0],["IMG_4211",403,269,"#1b3742",3,0],["V1-0013_DSC00000_lo",403,269,"#617c7e",-1,-1],["V1-0013_DSC00000",403,269,"#617c7e",0,0],["V1-0024_DSC00000",403,269,"#373130",4,1],["V1-0025_DSC00000",244,366,"#4a4638",2,0],["DSC03850",403,269,"#42494e",4,1],["DSC03919",403,269,"#3a352c",2,0],["1B961F8F-",366,244,"#5c4338",3,1],["C89A0FBE-BD91-4098-",244,366,"#4c4a56",5,1],["3758625E-",244,366,"#4a3f30",4,1],["IMG_1160",274,365,"#818485",1,0],["ORG_DSC08580",244,366,"#353942",3,0],["ORG_DSC08586",244,366,"#2e2c2e",6,1],["IMG_1625",205,365,"#2b261d",7,2],["ORG_DSC08767",933,1400,"#302a26",4,1],["DSC00005",403,269,"#5b5b60",2,0],["DSC00519",366,244,"#251f14",7,2],["DSC00523",403,269,"#100a06",7,2],["DSC00525",244,366,"#2e1b0e",7,2],["DSC02266",403,269,"#3c3c3c",-1,-1],["DSC02271",403,269,"#28292c",-1,-1],["DSC02308",403,269,"#403c3f",3,1],["DSC02589",403,269,"#444446",3,1],["DSC02600",403,269,"#040202",8,2],["DSC02603",403,269,"#050302",8,2],["DSC02792",403,269,"#4d4e4f",-1,-1],["DSC02866",403,269,"#020202",8,2],["DSC02918",403,269,"#121111",4,1],["DSC02936",403,269,"#2a2928",-1,-1],["DSC02937 copy",403,269,"#292827",4,1],["DSC02940",403,269,"#30302f",-1,-1],["DSC02955",934,1400,"#727271",1,0],["DSC02962",403,269,"#757575",1,0],["DSC02965",403,269,"#151413",4,1],["DSC02993",244,366,"#525150",3,0],["DSC03013",403,269,"#0a0302",6,2],["DSC03017",403,269,"#23110b",7,2],["DSC03079",244,366,"#0a090e",8,2],["DSC04187",366,244,"#050405",8,2],["DSC04632",244,366,"#060605",8,2],["DSC04644",403,269,"#313534",-1,-1],["DSC04649",244,366,"#5f5748",4,1],["DSC04672 copy",244,366,"#2c3034",6,1],["DSC04674",403,269,"#333844",6,1],["DSC04691 copy",244,366,"#0d0f0f",7,2],["DSC04749 copy",244,366,"#181511",7,2],["DSC04774",366,244,"#1e1b1a",7,2],["DSC04786",403,269,"#0e2130",7,2],["DSC04789",403,269,"#09121a",8,2],["DSC04794",244,366,"#080f11",-1,-1],["DSC04795 copy",244,366,"#091012",8,2],["DSC04842",403,269,"#0e0c10",8,2],["DSC04887",366,244,"#08202e",6,2],["DSC04907 copy",403,269,"#071620",7,2],["DSC04915",366,244,"#080a0a",8,2],["DSC04918",244,366,"#08141a",7,2],["DSC04919",244,366,"#07141a",7,2],["C0021T01",403,227,"#161c28",7,2],["DSC04929 copy",244,366,"#050a0c",7,2],["DSC04930",244,366,"#060e11",-1,-1],["DSC04942",403,269,"#0f5864",5,1],["DSC04953",366,244,"#030d11",7,2],["DSC04966",403,269,"#3f131d",6,2],["DSC04972",244,366,"#4c333c",-1,-1],["DSC04982 copy",403,269,"#0f3e59",6,1],["DSC04989",244,366,"#242528",6,1],["DSC04991",244,366,"#182f33",6,1],["DSC04995 copy",366,244,"#656e72",2,0],["DSC05002",366,244,"#423c39",3,1],["DSC05004",403,269,"#3d3837",5,1],["DSC05006 copy",366,244,"#000f1d",8,2],["DSC05007",403,269,"#113045",1,0],["DSC05009",366,244,"#031c2c",7,2],["DSC05010 copy",366,244,"#082130",-1,-1],["DSC05012",244,366,"#375265",4,1],["DSC05018",244,366,"#1d2c38",-1,-1],["DSC05019 copy",244,366,"#142028",4,1],["DSC05021 copy",244,366,"#192731",4,1],["DSC05023",403,269,"#010508",8,2],["DSC05025",366,244,"#020507",7,2],["DSC05041",403,269,"#32323c",2,0],["DSC05048 copy",403,269,"#232837",3,1],["DSC05053 copy",244,366,"#0b304d",6,1],["DSC05055 copy",244,366,"#1c394c",4,1],["DSC05066",269,403,"#041727",8,2],["DSC05071",244,366,"#0d2d45",-1,-1],["DSC05079",1400,934,"#051319",8,2],["DSC05084",244,366,"#0c2640",6,1],["DSC05092",403,269,"#071f61",6,1],["DSC05101",403,269,"#1b1411",8,2],["DSC05107 copy",933,1400,"#070d10",6,2],["DSC05108 copy",244,366,"#020d13",8,2],["DSC05112",366,244,"#040c10",8,2],["DSC05121",366,244,"#020503",-1,-1],["DSC05122",366,244,"#030503",7,2],["DSC05123 copy",933,1400,"#173d55",4,1],["DSC05133",244,366,"#060b10",8,2],["DSC05136",244,366,"#0a0b0f",-1,-1],["DSC05150",366,244,"#060402",8,2],["DSC05152",366,244,"#200903",8,2],["DSC05155",366,244,"#0b0503",7,2],["DSC05165",244,366,"#091519",7,2],["DSC05170",403,269,"#110b06",8,2],["DSC05171",366,244,"#0c0906",-1,-1],["DSC05187",366,244,"#1e0e0c",7,2],["DSC05196",403,269,"#59280d",4,1],["DSC05213",244,366,"#606a62",1,0],["DSC05222",366,244,"#222117",7,2],["DSC05231",403,269,"#2a2417",2,0],["DSC05232",403,269,"#251c0d",-1,-1],["DSC05241",366,244,"#130705",8,2],["DSC05250",403,269,"#151010",8,2],["DSC05255",244,366,"#1c0602",7,2],["DSC05269",403,269,"#211919",6,1],["DSC05276",366,244,"#443b2c",4,1],["DSC05278",403,269,"#281c13",-1,-1],["DSC05280",403,269,"#2b1e14",7,2],["DSC05287",403,269,"#213532",2,0],["DSC05291",403,269,"#242421",6,1],["DSC05301",366,244,"#130e0a",7,2],["DSC05305",366,244,"#16100c",7,2],["DSC05307",403,269,"#211207",8,2],["DSC05331",269,403,"#2d2c28",4,1],["DSC05332",403,269,"#2f2e2a",-1,-1],["DSC05336",244,366,"#13110a",7,2],["DSC05370",403,269,"#5f605c",0,0],["DSC05381",403,269,"#2a2c20",5,1],["DSC05382",403,269,"#2b2f26",-1,-1],["DSC05384",403,269,"#464540",6,1],["DSC05385",366,244,"#41403d",4,1],["DSC05387",244,366,"#272622",6,1],["DSC05388",403,269,"#0b0906",-1,-1],["DSC05389",403,269,"#10100e",6,1],["DSC05406",1600,1067,"#797150",-1,-1],["DSC05411",403,269,"#605940",1,0],["DSC05419",403,269,"#5a5137",1,0],["DSC05427",403,269,"#312d25",3,1],["DSC05429",403,269,"#666355",0,0],["DSC05436",403,269,"#5a5543",2,0],["DSC05437",403,269,"#3f4234",4,1],["DSC05438",403,269,"#3b3e32",5,1],["DSC05439",403,269,"#404539",3,1],["DSC05441",403,269,"#1e201d",6,2],["DSC05447",366,244,"#2b2d22",6,1],["DSC05449",403,269,"#5b6050",2,0],["DSC05450",403,269,"#62685a",1,0],["DSC05454",403,269,"#2a2a1d",6,2],["DSC05462",244,366,"#372d18",5,1],["DSC05463",244,366,"#342a18",-1,-1],["DSC05465",244,366,"#313124",5,1],["DSC05466",244,366,"#313124",-1,-1],["DSC05471",403,269,"#575540",2,0],["DSC05476",366,244,"#52513d",3,1],["DSC05481",403,269,"#141921",-1,-1],["DSC05482",403,269,"#12171e",6,1],["DSC05488",403,269,"#25282e",6,1],["DSC05515",403,269,"#16161a",-1,-1],["DSC05517",403,269,"#17171c",7,2],["DSC05528",366,244,"#131a22",7,2],["DSC05551",366,244,"#170d0a",7,2],["DSC05560",366,244,"#180f0b",8,2],["IMG_1632",403,269,"#575b60",2,0],["IMG_1751",1400,934,"#525050",1,0],["IMG_1775",244,366,"#161419",5,1],["IMG_1782",244,366,"#0f1515",6,1],["IMG_2135",1400,934,"#5e513f",2,0],["IMG_2138",244,366,"#58534d",4,1],["IMG_2171",403,269,"#424141",4,1],["DSC06841",934,1400,"#5d4435",4,1],["DSC06873",403,269,"#4c4948",4,1],["DSC06888",403,269,"#3b3837",-1,-1],["DSC06901",403,269,"#746753",3,1],["DSC06932",403,269,"#623720",-1,-1],["DSC06933 copy",1400,933,"#733f25",3,1],["DSC06948",244,366,"#562510",3,1],["DSC06957 copy",244,366,"#3d2420",5,1],["DSC06964",244,366,"#483231",6,1],["DSC06972",403,269,"#2c1b1c",7,2],["DSC07020",244,366,"#504c4d",4,1],["DSC07027",244,366,"#474445",-1,-1],["DSC07029",244,366,"#353335",4,1],["DSC07056",1400,934,"#342d30",6,2],["DSC07116",403,269,"#344551",5,1],["DSC07142 copy",403,269,"#135a8c",5,1],["DSC07157 copy",1400,933,"#091228",7,2],["DSC07286 copy",1400,933,"#381006",5,1],["DSC07330 copy",403,269,"#3b1e13",6,1],["DSC07347",403,269,"#575c5e",5,1],["DSC07362",403,269,"#1d2e3e",6,1],["DSC07395",403,269,"#252e3a",-1,-1],["DSC07396",403,269,"#232d3a",7,2],["DSC07453",403,269,"#242426",5,1],["DSC07456",403,269,"#0b1723",7,2],["DSC07461",403,269,"#192837",6,1],["DSC07467 copy",1400,933,"#1d293c",7,2],["DSC07474",403,269,"#101c28",-1,-1],["DSC07476",403,269,"#0d1216",5,1],["DSC07481",403,269,"#10151a",-1,-1],["DSC07486",403,269,"#151c20",-1,-1],["DSC07508",403,269,"#212626",-1,-1],["DSC07523 copy",1400,933,"#171c1f",6,2],["DSC07532",403,269,"#363a39",6,1],["DSC07536",403,269,"#0e0d0b",8,2],["DSC07721",403,269,"#1c200f",6,1],["DSC07808 copy",1400,933,"#383c3c",7,2],["DSC07824 copy",403,269,"#4e4d49",3,1],["DSC07829",403,269,"#545653",3,1],["DSC07882",403,269,"#514130",3,1],["DSC07903 copy",403,269,"#826e5c",3,1],["DSC07919 copy",403,269,"#3d3a33",4,1],["DSC07920",403,269,"#514637",4,1],["DSC08069",403,269,"#0f0e11",7,2],["DSC08110",403,269,"#0f212e",7,2],["DSC08114",403,269,"#010202",8,2],["DSC08121",403,269,"#030915",8,2],["DSC08232",403,269,"#959290",0,0],["DSC08252",403,269,"#7d7b75",2,0],["DSC08277",403,269,"#848382",2,0],["DSC08378",244,366,"#252c2d",6,1],["DSC08403",403,269,"#704015",6,1],["DSC08821",403,269,"#2e2d2b",5,1],["DSC09216 copy",403,269,"#050d10",7,2],["DSC09720",366,244,"#0b0d0e",7,2],["DSC09721",366,244,"#0b0e0f",-1,-1],["DSC09734",403,269,"#020818",8,2],["DSC09744",366,244,"#03080e",-1,-1],["DSC09746",366,244,"#03080e",7,2],["DSC09763",366,244,"#5e7892",3,1],["DSC09765",244,366,"#2f2c2d",5,1],["DSC09773",244,366,"#353c3e",2,0],["DSC01004",403,269,"#524742",-1,-1],["DSC01072",244,366,"#b7a498",-1,-1],["DSC01116",403,269,"#645647",2,0],["DSC01119",403,269,"#3b312a",6,1],["DSC01347",244,366,"#0c0f0d",7,2],["IMG_1223",403,302,"#7a6d60",0,0],["DSC01502",403,269,"#1c1912",7,2],["DSC01513",403,269,"#515553",2,0],["DSC01514",403,269,"#505552",-1,-1],["DSC01516",366,244,"#3e4341",4,1],["DSC01530",366,244,"#222421",5,1],["DSC01539",366,244,"#070604",7,2],["DSC01554",1400,934,"#707273",0,0],["DSC01576 copy",244,366,"#0d141b",-1,-1],["DSC01608",403,269,"#75716e",1,0],["DSC01848",366,244,"#03090d",8,2],["DSC01883",403,269,"#030507",8,2],["DSC01901",1400,934,"#060709",8,2],["DSC01919",403,269,"#06364b",7,2],["DSC01925",403,269,"#131c1f",7,2],["DSC01926",403,269,"#121a1d",7,2],["DSC01927",403,269,"#11191c",-1,-1],["DSC01945",403,269,"#141618",7,2],["DSC01947",403,269,"#010305",8,2],["DSC01949",244,366,"#225872",4,1],["DSC01957",244,366,"#2d536e",-1,-1],["DSC01964",403,269,"#223e52",2,0],["DSC01966",403,269,"#263b4a",7,2],["DSC01971",934,1400,"#4c7092",4,1],["DSC02002",403,269,"#293135",6,1],["DSC02009",403,269,"#3e4247",4,1],["DSC02024",403,269,"#3b3d42",3,1],["DSC02040",403,269,"#2b2c30",6,1],["DSC02050",244,366,"#36393f",6,2],["DSC02149",403,269,"#363a3d",5,1],["DSC02182",403,269,"#464e56",2,0],["DSC02195",403,269,"#202327",6,1],["280BA00E-872A-43AF-",274,365,"#252118",-1,-1],["DSC02264",403,269,"#4d575d",0,0],["DSC02269",403,269,"#141417",7,2],["DSC02273",403,269,"#181412",4,1],["DSC02311",403,269,"#030504",-1,-1],["DSC02351",403,269,"#020912",6,2],["DSC02370",366,244,"#042639",6,1],["DSC02386",1400,934,"#07111c",7,2],["DSC02405",366,244,"#28271c",7,2],["DSC02408",366,244,"#042132",-1,-1],["DSC02409",366,244,"#042639",7,2],["DSC02413",366,244,"#0a0f0d",-1,-1],["DSC02415",366,244,"#0a0e0d",7,2],["DSC02459",403,269,"#010406",-1,-1],["DSC02462",403,269,"#010406",8,2],["DSC02467",366,244,"#03090d",-1,-1],["DSC02474",403,269,"#02080c",8,2],["DSC02626",403,269,"#1b1a1a",7,2],["DSC02653",403,269,"#292623",7,2],["DSC02686",1600,1067,"#0d0c0b",-1,-1],["DSC02690",366,244,"#0c0d0c",5,1],["DSC02704",403,269,"#523209",4,1],["DSC02732",403,269,"#614220",0,0],["DSC02751",403,269,"#0e1e32",4,1],["DSC02765",403,269,"#4a142e",6,1],["DSC02976",403,269,"#130e0b",-1,-1],["DSC03030",403,269,"#502e15",5,1],["DSC03205",403,269,"#160902",7,2],["DSC03208",403,269,"#442209",-1,-1],["DSC03215",403,269,"#271103",-1,-1],["DSC03229",403,269,"#6c451a",2,0],["DSC03231",403,269,"#562e0e",5,1],["DSC03235",403,269,"#0a0301",8,2],["DSC03236",403,269,"#0c0401",-1,-1],["DSC03256",403,269,"#180607",-1,-1],["DSC03261",403,269,"#0f0606",8,2],["DSC03263",366,244,"#070605",-1,-1],["DSC03272",244,366,"#060402",8,2],["DSC03276",403,269,"#0a0b09",8,2],["DSC03285",403,269,"#080604",8,2],["DSC03289",244,366,"#090807",-1,-1],["DSC03290",244,366,"#080806",8,2],["DSC03293",1400,934,"#090908",6,1],["DSC03294",403,269,"#11110e",8,2],["DSC03295",403,269,"#11110e",8,2],["DSC03298",403,269,"#1a1009",7,2],["DSC03302",366,244,"#0b0e0a",7,2],["IMG_4312",365,274,"#060504",-1,-1],["DSC03322",244,366,"#3f3e3c",3,1],["DSC03324",366,244,"#535252",-1,-1],["DSC03325",366,244,"#4e4d4c",5,1],["DSC03329",403,269,"#18140f",6,1],["DSC03330",403,269,"#14100c",-1,-1],["DSC03409",403,269,"#4e4f57",3,1],["DSC03427",403,269,"#161310",6,1],["DSC03429",403,269,"#15120f",-1,-1],["DSC03445",403,269,"#46413b",1,0],["DSC03488",403,269,"#4a514d",2,0],["IMG_5627",365,274,"#1b1714",7,2],["IMG_5635",274,365,"#3c3837",3,1],["IMG_5642",274,365,"#898379",0,0],["IMG_5667",365,274,"#938d82",0,0],["IMG_5671",274,365,"#6a6460",1,0],["DSC03503",403,269,"#484f5c",1,0],["DSC03505",403,269,"#414955",-1,-1],["DSC03537",1400,934,"#302f2d",7,2],["DSC03607",403,269,"#0f0c11",5,1],["DSC03608",403,269,"#130f14",-1,-1],["IMG_6082",274,365,"#651f0d",3,1],["DSC03627",403,269,"#424951",-1,-1],["DSC03632",403,269,"#838da8",-1,-1],["DSC03637",403,269,"#626469",0,0],["DSC03650",403,269,"#53595a",-1,-1],["DSC03707",403,269,"#23323e",6,1],["DSC03721",1400,934,"#2a4a45",0,0],["DSC03728",403,269,"#0d1c18",6,2],["DSC03732",403,269,"#142d1f",-1,-1],["DSC03744",403,269,"#020403",8,2],["DSC03787",403,269,"#010201",-1,-1],["DSC03788",403,269,"#010201",8,2],["DSC03827",403,269,"#020202",8,2],["DSC03855",403,269,"#14141c",8,2],["DSC03858",1400,934,"#231f29",2,0],["IMG_6280",365,274,"#222421",6,1],["ORG_DSC03895",403,269,"#242443",5,1],["ORG_DSC03916",403,269,"#282849",6,1],["ORG_DSC03942",403,269,"#645034",4,1],["ORG_DSC03951",244,366,"#544837",4,1],["ORG_DSC03978",244,366,"#05090b",8,2],["ORG_DSC03999",1400,934,"#070707",7,2],["ORG_DSC04538",1400,934,"#363a1d",3,1],["IMG_7950",403,302,"#717c60",1,0],["ORG_DSC04914",403,269,"#181e1f",7,2],["ORG_DSC04933",403,269,"#474846",-1,-1],["ORG_DSC04934",366,244,"#2b2b29",6,1],["ORG_DSC04936",1400,934,"#101212",5,1],["ORG_DSC04943",403,269,"#27281d",7,2],["ORG_DSC04959",403,269,"#0d0d0b",7,2],["ORG_DSC04961",403,269,"#060706",8,2],["ORG_DSC04975",403,269,"#483f56",3,1],["ORG_DSC05016",1400,934,"#0d1819",7,2],["DSC05341",403,269,"#848d7d",0,0],["DSC05374",403,269,"#81897f",2,0],["DSC05897",403,269,"#131710",6,2],["DSC06216",1400,934,"#aab0ac",0,0],["DSC06217",403,269,"#c5ccc8",-1,-1],["DSC06233",934,1400,"#142639",7,2],["DSC06266 copy",403,269,"#707076",0,0],["DSC06385",403,269,"#7d8479",2,0],["DSC06441",403,269,"#5b5f54",2,0],["DSC07053",244,366,"#555652",2,0],["DSC07095",403,269,"#595b5d",0,0],["DSC07535",403,269,"#050506",-1,-1],["DSC07548",403,269,"#040405",8,2],["DSC07555",403,269,"#070709",8,2],["DSC08941",1400,934,"#100e0c",7,2],["IMG_4503",365,274,"#28241d",6,2],["DSC09115",403,269,"#1b1d1e",6,1],["DSC09169 copy",403,269,"#24201d",5,1],["DSC09248",403,269,"#2a2926",6,2],["DSC09848",403,269,"#020a10",-1,-1],["DSC09851",403,269,"#03090e",7,2],["DSC09862",366,244,"#070d18",6,1],["DSC09908",403,269,"#324655",2,0],["DSC00096",403,269,"#020202",8,2],["DSC00103",403,269,"#020203",-1,-1],["DSC00130",403,269,"#1b1e25",-1,-1],["DSC00171",403,269,"#353b4b",6,1],["DSC00305",403,269,"#17181b",3,1],["DSC00313",403,269,"#2d2c2f",-1,-1],["DSC00492",366,244,"#18130f",7,2],["DSC00498",244,366,"#17130e",6,2],["DSC00503",403,269,"#14140d",5,1],["DSC00515",1400,935,"#1f1309",3,0],["DSC02259",403,269,"#0c0c0b",7,2],["DSC02266",403,269,"#040404",8,2],["IMG_3859",403,302,"#6e6f73",0,0],["IMG_5153",403,302,"#85745f",1,0],["DSC03202",1400,935,"#050704",8,2],["DSC03212",403,269,"#0e0c0b",8,2],["DSC03555",403,269,"#46433e",1,0],["DSC03577",1400,935,"#868f8e",3,0],["DSC03612",403,269,"#4d4945",3,1],["DSC03633",403,269,"#050506",8,2],["DSC03638",403,269,"#08090a",8,2],["DSC03670",403,269,"#1a2c3e",6,1],["DSC03677",403,269,"#13222b",7,2],["DSC03699",403,269,"#0f110e",7,2],["DSC03720",403,269,"#06171b",7,2],["DSC03722",403,269,"#060503",8,2],["DSC03740",403,269,"#070605",7,2],["DSC03744",403,269,"#271c15",7,2],["DSC03789",403,269,"#110c09",8,2],["DSC04041",403,269,"#0f0d0c",7,2],["DSC04044",403,269,"#0b0808",8,2],["DSC04480",403,269,"#575757",-1,-1],["DSC04482",403,269,"#494848",5,1],["DSC04486",403,269,"#474747",-1,-1],["DSC04517",403,269,"#0f1011",8,2],["DSC04907",403,269,"#151315",-1,-1],["DSC04921",403,269,"#0f1014",-1,-1],["DSC04930",403,269,"#0f0b0d",8,2],["DSC04936",403,269,"#100c0a",6,1],["DSC04936",403,269,"#120e0b",-1,-1],["DSC04937",403,269,"#111111",5,1],["DSC04938",403,269,"#121110",-1,-1],["DSC04963",403,269,"#111618",-1,-1],["DSC04971",403,269,"#0e1215",6,2],["DSC04980",366,244,"#0d0c0c",8,2],["DSC04998",403,269,"#16120c",7,2],["DSC05001",366,244,"#464744",-1,-1],["DSC05002",933,1400,"#4b4e4a",3,1],["DSC05002",366,244,"#4b4e4a",-1,-1],["DSC05036",403,269,"#010408",8,2],["DSC05037",403,269,"#010205",-1,-1],["DSC05039",403,269,"#010205",8,2],["DSC05053",403,269,"#335eb2",3,1],["DSC05157",403,269,"#373d49",-1,-1],["DSC05182",403,269,"#2d221b",4,1],["DSC05184",1400,934,"#2b2522",4,1],["DSC05202",403,269,"#271e1b",6,1],["DSC05212",403,269,"#2b1c11",-1,-1],["DSC05216",1400,934,"#401711",5,1],["DSC05256",1600,1067,"#22303f",-1,-1],["DSC05258",403,269,"#1e2c3b",5,1],["DSC09240",403,269,"#d0ba91",0,0],["DSC09272",403,269,"#d1bd99",0,0],["DSC09288",403,269,"#cebf9e",0,0],["DSC05347",1600,1066,"#2c2a27",-1,-1],["DSC05359",244,366,"#161311",7,2],["DSC05368",244,366,"#14100f",-1,-1],["DSC05379",403,269,"#675653",2,0],["DSC05392",403,269,"#4b3e3d",3,1],["IMG_1367",365,274,"#403f3f",-1,-1],["IMG_1369",365,274,"#5e5c59",2,0],["IMG_1378",274,365,"#453a33",3,1],["DSC05400",244,366,"#161411",8,2],["DSC05412",244,366,"#121111",7,2],["DSC05438",1400,933,"#0e0a08",8,2],["IMG_1482",365,274,"#19100c",-1,-1],["IMG_1484",1050,1400,"#1d140f",7,2],["DSC05484",403,269,"#232f38",4,1],["DSC05556",403,269,"#4d575e",3,1],["DSC05566",366,244,"#030101",-1,-1],["DSC05579",366,244,"#060403",8,2],["DSC05602",403,269,"#020202",7,2],["DSC05625",403,269,"#181818",7,2],["DSC05652",403,269,"#24303b",4,1],["DSC05655",403,269,"#232f3b",-1,-1],["DSC05670",1066,1600,"#0a090a",-1,-1],["DSC05707",403,269,"#6e6f71",0,0],["DSC05718",1400,933,"#989ca2",1,0],["IMG_4095",1400,1050,"#27292b",5,1],["IMG_6808",403,302,"#b09778",-1,-1],["IMG_6813",403,302,"#95897c",-1,-1],["IMG_4145",403,302,"#7b90a5",2,0],["IMG_8350",261,365,"#92959a",0,0],["IMG_0289",365,274,"#2b2a25",4,1],["IMG_0552",274,365,"#a09486",0,0],["P1020486",244,366,"#6c6d6c",1,0],["IMG_2900",365,274,"#8b8a84",0,0],["DSC08589",403,269,"#181424",7,2],["DSC08599",403,269,"#27213e",3,1],["DSC08600",403,269,"#1e1933",7,2],["DSC08602",1600,1067,"#15152e",-1,-1],["DSC08615",1400,934,"#3b3a3c",4,1],["DSC08623",403,269,"#232024",-1,-1],["DSC08627",403,269,"#0f0e0d",8,2],["DSC08634",403,269,"#131212",8,2],["DSC08680",403,269,"#0c070a",7,2],["DSC08693",244,366,"#131531",7,2],["DSC08845",403,269,"#0f0c09",-1,-1],["DSC08937",403,269,"#515051",0,0],["IMG_8078",250,365,"#494e4e",3,1],["IMG_4228",403,302,"#63635d",1,0]],"seq":[[1,34,116,117],[1,291],[1,278,83],[1,796],[1,416,71],[1,144,752],[1,43,105],[1,1,4],[1,35,142],[1,799,172],[1,414,427],[1,415,152],[1,386],[1,912,362],[1,878,73],[1,357,753],[1,332,216],[1,41,306,902],[1,924,169],[1,877,766],[1,667,173],[1,46,378],[1,382,693],[1,275,64],[1,879,714],[1,910,562],[1,376],[1,387],[1,908,371],[1,793,828],[1,763,640],[1,360,803],[1,65,295],[1,188],[1,89,410],[1,377,550],[1,660,191],[1,149,182],[1,163],[1,343,390],[1,244,222],[1,327,413],[1,435,162],[1,25,926],[1,669,58],[1,82,401],[1,208,559],[1,38,175],[1,783,570],[1,234,87],[1,124,832],[1,395,70],[1,400,587],[1,383,531],[1,37,755],[1,44,829],[1,754],[1,206,560,205],[1,39,748],[1,30,242],[1,45,457],[1,911,219],[1,456,106],[1,366,59],[1,903,496],[1,153,66],[1,681,356],[1,316,802],[1,794,654],[1,662,305],[1,347,576],[1,641,429],[1,60],[1,50,492],[1,199,255],[1,300,505],[2,36,293],[2,657,422],[2,381,262],[2,907,542],[2,801,569],[2,800,13],[2,322,340],[2,642,21],[2,302,312],[2,231],[2,151,337],[2,164],[2,368,296],[2,126,178],[2,308,883],[2,375,232],[2,384,338],[2,367,431],[2,29,749],[2,235,563],[2,379,815],[2,690,586],[2,5,408],[2,380,321],[2,590,440],[2,886,171],[2,423,318],[2,774,354],[2,722,57],[2,307,533,90],[2,309,69],[2,81,229],[2,47,459],[2,419,403],[2,825,833],[2,33,139],[2,392,424],[2,210,425],[2,127,407],[2,317,364],[2,211,436],[2,335,405],[2,633,561],[2,631,863],[2,577],[2,370,98],[2,358],[2,213,506],[2,48,446],[2,214,260,215],[2,158,493],[2,203,760],[2,388,54],[2,56,230],[2,417,11],[2,686,22],[2,782,868],[2,32,122],[2,125,402],[2,336,914,141],[2,432,791],[2,61,745],[2,834,884],[2,80,887],[2,598,404],[2,632,165],[2,652,190],[2,894,751],[2,630,566],[2,226],[2,599,925],[2,740],[2,596,820],[2,447],[2,330,715],[2,8,520],[3,40,452],[3,434,277],[3,554],[3,564],[3,893,466],[3,6,146],[3,236,290],[3,592,254],[3,372,130],[3,397,289],[3,591,439],[3,594,917],[3,778,326],[3,530,421],[3,100,458],[3,635,355],[3,76,224],[3,664,68],[3,430,396],[3,685,99],[3,683,508,502],[3,341,695],[3,228],[3,779,547],[3,634,539,239],[3,593,909],[3,155,870,871],[3,304,713],[3,147,428],[3,605,454,603],[3,398,394],[3,899,220],[3,679,499,501],[3,17,485],[3,607,776],[3,342,758],[3,612,621],[3,412,876,712],[3,391,389],[3,610,176],[3,121,565],[3,608,359],[3,365,645],[3,810,848],[3,328],[3,723,718],[3,348,874],[3,665,411],[3,111,494],[3,319,320,217],[3,15,331],[3,299,787],[3,20,856,200],[3,79,227],[3,329],[3,574],[3,689,904],[3,333,259],[3,279,85],[3,616,653],[3,742,288],[3,600,118],[3,433,588],[3,824,10],[3,551],[3,572],[3,315,88],[3,77,292],[3,168,183],[3,601,258],[3,809,626],[3,643,467],[3,618,765],[3,507],[3,819,513,133],[3,687,716],[4,52,580],[4,437],[4,786],[4,568],[4,385,628],[4,123],[4,543],[4,323,334],[4,181,266],[4,120,579],[4,7,298,363],[4,136,837],[4,698,489],[4,512],[4,324,777],[4,684,538],[4,490,491],[4,611,775],[4,734,399],[4,154,555],[4,2,297],[4,468,814],[4,373,743],[4,691,872],[4,644,854,557],[4,658,746],[4,264,553],[4,16,589],[4,613,477,131],[4,697,55],[4,688,515],[4,811,625],[4,606,859],[4,487],[4,313,223],[4,240,808,72],[4,767,571],[4,795,192],[4,567],[4,233,460],[4,823,252,251],[4,619,325],[4,615,409],[4,682,646],[4,673,420],[4,28,12],[4,617,798],[4,346,246],[4,128,913],[4,709,541,310],[4,661,441],[4,361,27],[4,532,161],[4,666,179],[4,263],[4,3,245],[4,710,677],[4,143,651],[4,284,922],[4,482],[4,472],[4,702,478,497],[4,629,486,647],[4,349,483],[4,282,469],[4,602,86,471],[4,311,443],[4,438,789],[4,544,700],[4,113,822],[4,185,897],[4,583,584,167],[4,62,694],[4,352,784],[4,675,674],[4,23],[5,637,481],[5,374,813,504],[5,892],[5,273,881,889],[5,842,96,757],[5,843,861,442],[5,719,196,197],[5,549,750],[5,519,788],[5,93,838],[5,845,582,138],[5,609,529],[5,180,921],[5,103,915,140],[5,526],[5,470,537],[5,898,461,525],[5,807,545],[5,351,237,238],[5,738,301],[5,636,839],[5,97,840],[5,480],[5,699],[5,659],[5,792,781],[5,91,704],[5,195,129],[5,737,826],[5,535,546],[5,888,733,201],[5,850,250,514],[5,517,509],[5,495,511],[5,345,451],[5,846,256],[5,286,267],[5,19,247],[5,729,187],[5,735,115,107],[5,736,536,523],[5,844,730],[5,835,585],[5,638,920,919],[5,462,521,475],[5,773,627,503],[5,109,639],[5,473,708],[5,476,670],[5,516],[5,806,479],[5,853,112],[5,731,727],[5,724,527],[5,268],[5,890,193],[5,830,831],[5,790,314],[5,827,816,524],[5,860,772],[5,189,119],[5,464,780],[5,706,836],[5,649,865],[5,406,867],[5,678],[5,671,672],[5,24],[5,805,463],[5,896],[5,137,841,449],[5,166,95,448],[5,769],[5,771],[5,74]]};
+const META = DATA.meta;            // per image id: [name, w, h, color]
+const SEQ = DATA.seq;              // groups: [movement, id, id?, id?]
+const pad3 = n => String(n).padStart(3,'0');
+
+/* Photographs live in a few packed files, loaded as they come near */
+const PACKS = {}, WAIT = {}, URLS = {p:{}, t:{}};
+window.__pack = (kind, k, obj) => { const key = kind + k; PACKS[key] = obj; (WAIT[key] || []).forEach(f => f(obj)); delete WAIT[key]; };
+function loadPack(kind, k){
+  const key = kind + k;
+  if (PACKS[key]) return Promise.resolve(PACKS[key]);
+  return new Promise(res => {
+    if (!WAIT[key]){
+      WAIT[key] = [];
+      const sc = document.createElement('script');
+      sc.src = `${kind}/${String(k).padStart(2,'0')}.js`; sc.async = true;
+      document.head.appendChild(sc);
+    }
+    WAIT[key].push(res);
+  });
+}
+function srcFor(id, kind){
+  kind = kind || 'p';
+  if (URLS[kind][id]) return Promise.resolve(URLS[kind][id]);
+  const m = META[id-1];
+  return loadPack(kind, kind === 'p' ? m[4] : m[5]).then(o => (URLS[kind][id] = 'data:image/jpeg;base64,' + o[id]));
+}
+function fill(img, id, kind){ if (img.dataset.done) return; img.dataset.done = 1; srcFor(id, kind).then(u => { img.src = u; }); }
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Flat order of photographs as they hang
+const ORDER = [];                  // {id, g}
+SEQ.forEach((s, gi) => s.slice(1).forEach(id => ORDER.push({id, g: gi + 1})));
+const N = ORDER.length;
+const posOf = {}; ORDER.forEach((o, k) => posOf[o.id] = k + 1);
+
+/* Build the sequence */
+const seqEl = document.getElementById('sequence');
+const frag = document.createDocumentFragment();
+let singles = 0, lastM = SEQ[0][0];
+function plate(id){
+  const [name,w,h,c] = META[id-1];
+  const p = posOf[id];
+  const f = document.createElement('figure');
+  f.className = 'plate'; f.dataset.p = p;
+  f.innerHTML = `<button class="plate-btn" aria-label="Open photograph ${p}, ${name}"><img data-id="${id}" width="${w}" height="${h}" decoding="async" alt=""Photograph ${p}, ${name}" style="--r:${(w/h).toFixed(4)};--c:${c}"></button><figcaption class="label num"><span class="n">${pad3(p)}</span><span>${name}</span></figcaption>`;
+  f.querySelector('button').addEventListener('click', () => openViewer(p));
+  return f;
+}
+SEQ.forEach(s => {
+  const [m, ...ids] = s;
+  if (m !== lastM){ const br = document.createElement('div'); br.className = 'pause'; br.setAttribute('aria-hidden','true'); frag.appendChild(br); lastM = m; }
+  const row = document.createElement('div');
+  let cls = ['one','two','three'][ids.length-1];
+  if (ids.length === 1){ cls += ' ' + ['c','l','r'][singles++ % 3]; }
+  row.className = 'hang ' + cls;
+  ids.forEach(id => row.appendChild(plate(id)));
+  frag.appendChild(row);
+});
+seqEl.appendChild(frag);
+
+/* Index sheet, built on first open */
+let sheetBuilt = false;
+function buildSheet(){
+  if (sheetBuilt) return; sheetBuilt = true;
+  const sheet = document.getElementById('sheet');
+  const fr = document.createDocumentFragment();
+  SEQ.forEach((s, gi) => {
+    const cell = document.createElement('div'); cell.className = 'cell';
+    const row = document.createElement('div'); row.className = 'row n' + (s.length-1);
+    s.slice(1).forEach(id => {
+      const [name,w,h] = META[id-1]; const p = posOf[id];
+      const b = document.createElement('button');
+      b.setAttribute('aria-label', `Open photograph ${p}, ${name}`);
+      b.style.setProperty('--r',(w/h).toFixed(4));
+      b.innerHTML = `<img data-id="${id}" decoding="async" alt="" width="${w}" height="${h}">`;
+      b.addEventListener('click', () => openViewer(p));
+      row.appendChild(b);
+    });
+    const cap = document.createElement('span'); cap.className = 'cap label num';
+    const ps = s.slice(1).map(id => pad3(posOf[id]));
+    cap.textContent = `Group ${gi+1}  ·  ${ps[0]}${ps.length>1 ? ' to ' + ps[ps.length-1] : ''}`;
+    cell.append(row, cap); fr.appendChild(cell);
+  });
+  sheet.appendChild(fr);
+  const imgs = sheet.querySelectorAll('img[data-id]');
+  if ('IntersectionObserver' in window){
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ fill(e.target, +e.target.dataset.id, 't'); io.unobserve(e.target); } }), {root: idx, rootMargin:'600px 0px'});
+    imgs.forEach(i => io.observe(i));
+  } else imgs.forEach(i => fill(i, +i.dataset.id, 't'));
+}
+
+/* Eye adjusting + counter */
+const count = document.getElementById('count');
+const plates = [...document.querySelectorAll('.plate')];
+if ('IntersectionObserver' in window){
+  const near = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting){ const im = e.target.querySelector('img'); fill(im, +im.dataset.id, 'p'); near.unobserve(e.target); }
+  }), {rootMargin:'150% 0px'});
+  plates.forEach(p => near.observe(p));
+  const seen = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting){ e.target.classList.add('seen'); seen.unobserve(e.target); }
+  }), {rootMargin:'0px 0px -15% 0px', threshold:.1});
+  plates.forEach(p => seen.observe(p));
+  const cur = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) count.textContent = `${pad3(+e.target.dataset.p)} / ${N}`;
+  }), {rootMargin:'-45% 0px -45% 0px'});
+  plates.forEach(p => cur.observe(p));
+  new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) count.textContent = `${N} Photographs`; })).observe(document.getElementById('cover'));
+} else plates.forEach(p => { p.classList.add('seen'); const im = p.querySelector('img'); fill(im, +im.dataset.id, 'p'); });
+
+
+/* Overlays and hash routes */
+const idx = document.getElementById('index');
+const viewer = document.getElementById('viewer');
+const vimg = document.getElementById('vimg');
+let at = 1;
+function lock(on){ document.body.classList.toggle('locked', on); }
+function showIndex(){ buildSheet(); viewer.classList.remove('open'); idx.classList.add('open'); lock(true); }
+function showPlate(p){
+  at = Math.min(Math.max(1, p), N);
+  const o = ORDER[at-1]; const [name] = META[o.id-1];
+  idx.classList.remove('open');
+  viewer.classList.add('open'); lock(true);
+  vimg.classList.remove('in');
+  vimg.removeAttribute('src');
+  vimg.alt = `Photograph ${at}, ${name}`;
+  const want = at;
+  srcFor(o.id).then(u => { if (want !== at) return; vimg.onload = () => vimg.classList.add('in'); vimg.src = u; if (vimg.complete && vimg.naturalWidth) vimg.classList.add('in'); });
+  document.getElementById('vn').textContent = `${pad3(at)} / ${N}`;
+  document.getElementById('vname').textContent = name;
+  document.getElementById('vgroup').textContent = `Group ${o.g}`;
+  [at-1, at+1].forEach(k => { if (k >= 1 && k <= N) srcFor(ORDER[k-1].id); });
+}
+function closeAll(){
+  const was = viewer.classList.contains('open') ? at : 0;
+  idx.classList.remove('open'); viewer.classList.remove('open'); lock(false);
+  return was;
+}
+function openViewer(p){ location.hash = 'plate-' + p; }
+function route(){
+  const h = location.hash.slice(1);
+  if (h === 'index') return showIndex();
+  const m = h.match(/^plate-(\d{1,3})$/);
+  if (m) return showPlate(+m[1]);
+  const was = closeAll();
+  if (h === '' && was){
+    const el = document.querySelector(`.plate[data-p="${was}"]`);
+    if (el) el.scrollIntoView({block:'center'});
+  } else if (h){
+    const el = document.getElementById(h);
+    if (el) el.scrollIntoView({behavior: reduce ? 'auto' : 'smooth'});
+  }
+}
+function leave(){ location.hash = ''; }
+addEventListener('hashchange', route);
+route();
+
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', leave));
+document.querySelector('[data-to-index]').addEventListener('click', () => { location.hash = 'index'; });
+const step = d => { location.replace('#plate-' + (((at - 1 + d + N) % N) + 1)); };
+document.querySelector('[data-prev]').addEventListener('click', () => step(-1));
+document.querySelector('[data-next]').addEventListener('click', () => step(1));
+viewer.querySelector('.zone.prev').addEventListener('click', () => step(-1));
+viewer.querySelector('.zone.next').addEventListener('click', () => step(1));
+addEventListener('keydown', e => {
+  if (viewer.classList.contains('open')){
+    if (e.key === 'ArrowRight') step(1);
+    else if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key === 'Escape') leave();
+  } else if (idx.classList.contains('open') && e.key === 'Escape') leave();
+});
+let sx = null;
+viewer.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, {passive:true});
+viewer.addEventListener('touchend', e => {
+  if (sx === null) return;
+  const dx = e.changedTouches[0].clientX - sx; sx = null;
+  if (Math.abs(dx) > 44) step(dx < 0 ? 1 : -1);
+});
+</script>
+</body>
+</html>
