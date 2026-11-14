@@ -115,6 +115,17 @@ html.js .plate.seen img{filter:none}
 .sheet .row button:hover img,.sheet .row button:focus-visible img{opacity:1}
 .sheet .cap{color:#34322f}
 
+
+/* Play: fullscreen slideshow of pairs */
+#play{position:fixed;inset:0;z-index:60;background:#000;display:none;cursor:none}
+#play.open{display:block}
+#play.cur{cursor:default}
+#play .slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:var(--pg);opacity:0;transition:opacity .6s ease}
+#play .slide.in{opacity:1}
+#play .slide img{display:block;width:auto;height:auto}
+#play .hint{position:absolute;left:0;right:0;bottom:22px;text-align:center;color:#34322f;opacity:0;transition:opacity .6s}
+#play.cur .hint{opacity:1}
+.top nav button.label{cursor:pointer}
 /* Viewer */
 #viewer .stage{position:absolute;inset:64px var(--gutter) 72px;display:flex;align-items:center;justify-content:center}
 #viewer .stage img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;opacity:0;transition:opacity .45s}
@@ -149,6 +160,7 @@ html.js .plate.seen img{filter:none}
 <header class="top">
   <a class="label" href="#top">Noah Conopask</a>
   <nav aria-label="Site">
+    <button class="label" id="playbtn" type="button">Play</button>
     <a class="label hide-s" href="#sequence">Sequence</a>
     <a class="label" href="#index">Index</a>
     <a class="label hide-s" href="#text">Text</a>
@@ -217,6 +229,11 @@ html.js .plate.seen img{filter:none}
   <div class="sheet" id="sheet"></div>
 </div>
 
+
+<div id="play" aria-label="Slideshow" role="dialog" aria-modal="true">
+  <div class="slide"></div><div class="slide"></div>
+  <div class="hint label">Esc to exit</div>
+</div>
 <div class="overlay" id="viewer" role="dialog" aria-modal="true" aria-label="Photograph viewer">
   <div class="bar top-bar">
     <span class="label">The World is My Woods</span>
@@ -251,7 +268,7 @@ function loadPack(kind, k){
     if (!WAIT[key]){
       WAIT[key] = [];
       const sc = document.createElement('script');
-      sc.src = `${kind}/${String(k).padStart(2,'0')}.js?v=1794684314`; sc.async = true;
+      sc.src = `${kind}/${String(k).padStart(2,'0')}.js?v=1794684530`; sc.async = true;
       document.head.appendChild(sc);
     }
     WAIT[key].push(res);
@@ -418,6 +435,77 @@ viewer.addEventListener('touchend', e => {
   const dx = e.changedTouches[0].clientX - sx; sx = null;
   if (Math.abs(dx) > 44) step(dx < 0 ? 1 : -1);
 });
+
+/* Play: each pair for 10 seconds, then a quick fade to another pair at random */
+(() => {
+  const el = document.getElementById('play'), slides = [...el.querySelectorAll('.slide')];
+  const HOLD = +(new URLSearchParams(location.search).get('hold') || 10000);
+  let order = [], k = 0, cur = 0, timer = null, idle = null, running = false;
+  const pairs = SEQ.map(g => g.slice(1));
+  const shuffle = a => { for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  function nextGroup(){
+    if (k >= order.length){ const last = order[order.length - 1]; order = shuffle(pairs.slice()); if (order[0] === last && order.length > 1) order.push(order.shift()); k = 0; }
+    return order[k++];
+  }
+  function layout(slide){
+    const imgs = [...slide.querySelectorAll('img')]; if (!imgs.length) return;
+    const W = innerWidth * .9, H = innerHeight * .84, gap = Math.round(innerWidth * .035);
+    slide.style.setProperty('--pg', gap + 'px');
+    const R = imgs.reduce((t, im) => t + (+im.dataset.r), 0);
+    const h = Math.min(H, (W - gap * (imgs.length - 1)) / R);
+    imgs.forEach(im => { im.style.height = Math.round(h) + 'px'; im.style.width = Math.round(h * im.dataset.r) + 'px'; });
+  }
+  function prepare(slide, g){
+    return Promise.all(g.map(id => srcFor(id, 'p').catch(() => srcFor(id, 't')))).then(urls => {
+      slide.innerHTML = '';
+      g.forEach((id, i) => { const m = META[id-1], im = new Image(); im.alt = ''; im.dataset.r = m[1] / m[2]; im.src = urls[i]; slide.appendChild(im); });
+      layout(slide);
+      return Promise.all([...slide.querySelectorAll('img')].map(im => im.decode ? im.decode().catch(() => {}) : null));
+    });
+  }
+  function advance(){
+    if (!running) return;
+    clearTimeout(timer);
+    const nxt = slides[1 - cur], g = nextGroup();
+    prepare(nxt, g).then(() => {
+      if (!running) return;
+      nxt.classList.add('in'); slides[cur].classList.remove('in'); cur = 1 - cur;
+      timer = setTimeout(advance, HOLD);
+      // warm the following pair while this one holds
+      const peek = order[k]; if (peek) peek.forEach(id => srcFor(id, 'p').catch(() => {}));
+    });
+  }
+  function wake(){ el.classList.add('cur'); clearTimeout(idle); idle = setTimeout(() => el.classList.remove('cur'), 1800); }
+  function start(){
+    if (running) return;
+    running = true; order = shuffle(pairs.slice()); k = 0;
+    slides.forEach(s => { s.classList.remove('in'); s.innerHTML = ''; });
+    el.classList.add('open'); lock(true); wake();
+    if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    advance();
+  }
+  function stop(){
+    if (!running) return;
+    running = false; clearTimeout(timer); clearTimeout(idle);
+    el.classList.remove('open', 'cur'); lock(false);
+    const fs = document.fullscreenElement || document.webkitFullscreenElement;
+    if (fs){ const r = (document.exitFullscreen || document.webkitExitFullscreen).call(document); if (r && r.catch) r.catch(() => {}); }
+  }
+  document.getElementById('playbtn').addEventListener('click', start);
+  el.addEventListener('click', stop);
+  el.addEventListener('mousemove', wake);
+  ['fullscreenchange', 'webkitfullscreenchange'].forEach(ev => document.addEventListener(ev, () => {
+    if (!(document.fullscreenElement || document.webkitFullscreenElement) && running) stop();
+  }));
+  addEventListener('resize', () => { if (running) slides.forEach(layout); });
+  addEventListener('keydown', e => {
+    if (!running) return;
+    if (e.key === 'Escape') stop();
+    else if (e.key === 'ArrowRight' || e.key === ' '){ e.preventDefault(); advance(); }
+    e.stopImmediatePropagation();
+  }, true);
+})();
 </script>
 </body>
 </html>
