@@ -160,7 +160,7 @@ html.js .plate.seen img{filter:none}
   <section class="cover" id="cover" aria-label="The World is My Woods, cover">
     <h1>The World is My Woods</h1>
     <div class="foot">
-      <div class="by label"><span>Noah Conopask</span><span>Photographs</span></div>
+      <div class="by label"><span>Photographs</span></div>
     </div>
   </section>
 
@@ -168,7 +168,6 @@ html.js .plate.seen img{filter:none}
     <aside class="side label">
       <dl>
         <div><dt>Work</dt><dd>The World is My Woods</dd></div>
-        <div><dt>Artist</dt><dd>Noah Conopask</dd></div>
         <div><dt>Photographs</dt><dd class="num">752, hung in 376 groups</dd></div>
         <div><dt>Theme</dt><dd>Partial visibility</dd></div>
         <div><dt>Places</dt><dd>Maryland, Baltimore, DC, New York, London, Tokyo, Belgrade and elsewhere</dd></div>
@@ -252,7 +251,7 @@ function loadPack(kind, k){
     if (!WAIT[key]){
       WAIT[key] = [];
       const sc = document.createElement('script');
-      sc.src = `${kind}/${String(k).padStart(2,'0')}.js?v=1794683560`; sc.async = true;
+      sc.src = `${kind}/${String(k).padStart(2,'0')}.js?v=1794683829`; sc.async = true;
       document.head.appendChild(sc);
     }
     WAIT[key].push(res);
