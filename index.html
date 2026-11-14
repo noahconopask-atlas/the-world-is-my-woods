@@ -248,7 +248,7 @@ function loadPack(kind, k){
     if (!WAIT[key]){
       WAIT[key] = [];
       const sc = document.createElement('script');
-      sc.src = `${kind}/${String(k).padStart(2,'0')}.js`; sc.async = true;
+      sc.src = `${kind}/${String(k).padStart(2,'0')}.js?v=1794630800`; sc.async = true;
       document.head.appendChild(sc);
     }
     WAIT[key].push(res);
@@ -258,9 +258,12 @@ function srcFor(id, kind){
   kind = kind || 'p';
   if (URLS[kind][id]) return Promise.resolve(URLS[kind][id]);
   const m = META[id-1];
-  return loadPack(kind, kind === 'p' ? m[4] : m[5]).then(o => (URLS[kind][id] = 'data:image/jpeg;base64,' + o[id]));
+  return loadPack(kind, kind === 'p' ? m[4] : m[5]).then(o => {
+    if (!o[id]) throw new Error('missing ' + id);
+    return (URLS[kind][id] = 'data:image/jpeg;base64,' + o[id]);
+  });
 }
-function fill(img, id, kind){ if (img.dataset.done) return; img.dataset.done = 1; srcFor(id, kind).then(u => { img.src = u; }); }
+function fill(img, id, kind){ if (img.dataset.done) return; img.dataset.done = 1; srcFor(id, kind).then(u => { img.src = u; }).catch(() => { delete img.dataset.done; }); }
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // Flat order of photographs as they hang
