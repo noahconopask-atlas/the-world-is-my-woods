@@ -275,7 +275,7 @@ function loadPack(kind, k){
   });
 }
 // Rotation in quarter turns for both packed versions of each photograph.
-const PHOTO_ROTATIONS = new Map([[408, 2], [463, -1], [493, -1], [545, -1], [568, -1], [665, -1], [808, 1]]);
+const PHOTO_ROTATIONS = new Map([[408, 2], [463, -1], [493, -1], [501, 2], [545, -1], [568, -1], [665, -1], [808, 1]]);
 async function rotatePhoto(src, turns){
   const image = new Image();
   image.src = src;
