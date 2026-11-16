@@ -274,19 +274,20 @@ function loadPack(kind, k){
     WAIT[key].push(res);
   });
 }
-// Rotate both packed versions of each sideways photograph before display.
-const ROTATED_PHOTOS = new Set([493, 545, 665]);
-async function rotateCounterclockwise(src){
+// Rotation in quarter turns for both packed versions of each photograph.
+const PHOTO_ROTATIONS = new Map([[408, 2], [493, -1], [545, -1], [665, -1]]);
+async function rotatePhoto(src, turns){
   const image = new Image();
   image.src = src;
   await image.decode();
   const canvas = document.createElement('canvas');
-  canvas.width = image.naturalHeight;
-  canvas.height = image.naturalWidth;
+  const swapsDimensions = turns % 2 !== 0;
+  canvas.width = swapsDimensions ? image.naturalHeight : image.naturalWidth;
+  canvas.height = swapsDimensions ? image.naturalWidth : image.naturalHeight;
   const context = canvas.getContext('2d');
-  context.translate(0, canvas.height);
-  context.rotate(-Math.PI / 2);
-  context.drawImage(image, 0, 0);
+  context.translate(canvas.width / 2, canvas.height / 2);
+  context.rotate(turns * Math.PI / 2);
+  context.drawImage(image, -image.naturalWidth / 2, -image.naturalHeight / 2);
   return canvas.toDataURL('image/png');
 }
 function srcFor(id, kind){
@@ -296,7 +297,8 @@ function srcFor(id, kind){
   return loadPack(kind, kind === 'p' ? m[4] : m[5]).then(o => {
     if (!o[id]) throw new Error('missing ' + id);
     const src = 'data:image/jpeg;base64,' + o[id];
-    if (ROTATED_PHOTOS.has(id)) return (URLS[kind][id] ||= rotateCounterclockwise(src));
+    const turns = PHOTO_ROTATIONS.get(id);
+    if (turns) return (URLS[kind][id] ||= rotatePhoto(src, turns));
     return (URLS[kind][id] = src);
   });
 }
